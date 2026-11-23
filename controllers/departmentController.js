@@ -68,3 +68,88 @@ exports.getDepartment = async (req, res) => {
         });
     }
 };
+
+exports.updateDepartment = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const allowedFields = [
+            "departmentName",
+            "departmentCode",
+            "departmentHead",
+            "description"
+        ];
+
+        const updateData = {};
+
+        allowedFields.forEach((field) => {
+            if (req.body[field] !== undefined) {
+                updateData[field] = req.body[field];
+            }
+        });
+
+        if (Object.keys(updateData).length === 0) {
+            return res.status(400).json({
+                message: "No valid fields provided for update"
+            });
+        }
+
+        const department = await Department.findByIdAndUpdate(
+            id,
+            updateData,
+            { new: true, runValidators: true }
+        );
+
+        if (!department) {
+            return res.status(404).json({
+                message: "Department not found"
+            });
+        }
+
+        res.status(200).json({
+            message: "Department updated successfully",
+            department
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error updating department",
+            error: error.message
+        });
+    }
+};
+
+exports.deleteDepartment = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const department = await Department.findById(id);
+
+        if (!department) {
+            return res.status(404).json({
+                message: "Department not found"
+            });
+        }
+
+        const studentExists = await Student.findOne({ department: id });
+        const lecturerExists = await Lecturer.findOne({ department: id });
+        const courseExists = await Course.findOne({ department: id });
+
+        if (studentExists || lecturerExists || courseExists) {
+            return res.status(409).json({
+                message: "Cannot delete department while students, lecturers or courses are assigned to it"
+            });
+        }
+
+        await Department.findByIdAndDelete(id);
+
+        res.status(200).json({
+            message: "Department deleted successfully"
+        });
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Error deleting department",
+            error: error.message
+        });
+    }
+};
