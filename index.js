@@ -10,6 +10,7 @@ const studentRoutes = require("./routes/studentRoutes");
 const lecturerRoutes = require("./routes/lecturerRoutes");
 const departmentRoutes = require("./routes/departmentRoutes")
 const courseRoutes = require("./routes/courseRoutes");
+const registrationRoutes = require("./routes/registrationRoutes");
 
 app.use("/lecturers", lecturerRoutes);
 
@@ -20,6 +21,7 @@ app.get("/", (req, res) => {
 app.use("/students", studentRoutes);
 app.use("/departments", departmentRoutes);
 app.use("/courses", courseRoutes);
+app.use("/registrations", registrationRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on PORT ${PORT}`);
