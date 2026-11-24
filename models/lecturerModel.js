@@ -5,12 +5,10 @@ const lecturerSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: true,
-      trim: true,
     },
     lastName: {
       type: String,
       required: true,
-      trim: true,
     },
     email: {
       type: String,
@@ -21,8 +19,6 @@ const lecturerSchema = new mongoose.Schema(
     },
     phoneNumber: {
       type: String,
-      required: true,
-      trim: true,
     },
     staffId: {
       type: String,

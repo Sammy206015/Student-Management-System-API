@@ -8,7 +8,7 @@ const studentRoutes = require("./routes/studentRoutes");
 
 const lecturerRoutes = require("./routes/lecturerRoutes");
 
-app.use("/api/lecturers", lecturerRoutes);
+app.use("/lecturers", lecturerRoutes);
 
 app.get("/", (req, res) => {
   res.send("Student Management System Application Is Running");
