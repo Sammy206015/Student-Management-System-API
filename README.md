@@ -95,7 +95,7 @@ student-management-api/
 ### 1. Clone the Repository
 
 ```bash
-git clone 
+git clone https://github.com/Sammy206015/Student-Management-System-API.git
 ```
 
 ### 2. Navigate into the Project Directory
